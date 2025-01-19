@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-500 p-4 text-white">
+        <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+    </header>
+    <main class="p-6">
+        <h2 class="text-xl font-semibold mb-4">Manage System</h2>
+        <div class="space-y-4">
+            <button onclick="showManageUsers()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Manage Users</button>
+            <button onclick="showManageProducts()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Manage Products</button>
+            <button onclick="showManageSuppliers()" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Manage Suppliers</button>
+            <button onclick="showManageStocks()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Manage Stocks</button>
+        </div>
+
+        <!-- Manage Users Section -->
+        <div id="manage-users-section" class="hidden mt-6">
+            <h3 class="text-xl font-bold mb-4">Manage Users</h3>
+            <form id="create-user-form" class="space-y-4 bg-white p-6 rounded shadow-lg">
+                <div>
+                    <label for="username" class="block text-gray-700">User Name</label>
+                    <input type="text" id="username" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter user name" required>
+                </div>
+                <div>
+                    <label for="userid" class="block text-gray-700">User ID</label>
+                    <input type="text" id="userid" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter user ID" required>
+                </div>
+                <div>
+                    <label for="role" class="block text-gray-700">Role</label>
+                    <select id="role" class="w-full px-4 py-2 border rounded-lg">
+                        <option value="Admin">Admin</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                </div>
+                <button type="button" onclick="createUser()" class="bg-green-500 text-white px-4 py-2 rounded">Create User</button>
+            </form>
+            <div class="mt-6">
+                <h4 class="text-lg font-bold mb-2">User List</h4>
+                <table class="w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">User Name</th>
+                            <th class="border px-4 py-2">User ID</th>
+                            <th class="border px-4 py-2">Role</th>
+                            <th class="border px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Manage Products Section -->
+        <div id="manage-products-section" class="hidden mt-6">
+            <h3 class="text-xl font-bold mb-4">Manage Products</h3>
+            <form id="create-product-form" class="space-y-4 bg-white p-6 rounded shadow-lg">
+                <div>
+                    <label for="product-name" class="block text-gray-700">Product Name</label>
+                    <input type="text" id="product-name" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter product name" required>
+                </div>
+                <div>
+                    <label for="product-id" class="block text-gray-700">Product ID</label>
+                    <input type="text" id="product-id" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter product ID" required>
+                </div>
+                <div>
+                    <label for="product-category" class="block text-gray-700">Product Category</label>
+                    <select id="product-category" class="w-full px-4 py-2 border rounded-lg">
+                        <option value="Router">Router</option>
+                        <option value="Card">Card</option>
+                        <option value="Modem">Modem</option>
+                        <option value="Combiner">Combiner</option>
+                        <option value="Switch">Switch</option>
+                        <option value="Splitter">Splitter</option>
+                        <option value="Multiplexer">Multiplexer</option>
+                    </select>
+                </div>
+                <button type="button" onclick="createProduct()" class="bg-green-500 text-white px-4 py-2 rounded">Add Product</button>
+            </form>
+            <div class="mt-6">
+                <h4 class="text-lg font-bold mb-2">Product List</h4>
+                <table class="w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">Product Name</th>
+                            <th class="border px-4 py-2">Product ID</th>
+                            <th class="border px-4 py-2">Category</th>
+                            <th class="border px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Manage Suppliers Section -->
+        <div id="manage-suppliers-section" class="hidden mt-6">
+            <h3 class="text-xl font-bold mb-4">Manage Suppliers</h3>
+            <form id="create-supplier-form" class="space-y-4 bg-white p-6 rounded shadow-lg">
+                <div>
+                    <label for="supplier-name" class="block text-gray-700">Supplier Name</label>
+                    <input type="text" id="supplier-name" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter supplier name" required>
+                </div>
+                <div>
+                    <label for="supplier-mail" class="block text-gray-700">Supplier Email</label>
+                    <input type="email" id="supplier-mail" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter supplier email" required>
+                </div>
+                <div>
+                    <label for="supplier-contact" class="block text-gray-700">Supplier Contact</label>
+                    <input type="text" id="supplier-contact" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter supplier contact" required>
+                </div>
+                <button type="button" onclick="createSupplier()" class="bg-green-500 text-white px-4 py-2 rounded">Add Supplier</button>
+            </form>
+            <div class="mt-6">
+                <h4 class="text-lg font-bold mb-2">Supplier List</h4>
+                <table class="w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">Supplier Name</th>
+                            <th class="border px-4 py-2">Email</th>
+                            <th class="border px-4 py-2">Contact</th>
+                            <th class="border px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="suppliers-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Manage stocks section-->
+        <div id="manage-stocks-section" class="hidden mt-6">
+            <h3 class="text-xl font-bold mb-4">Manage Stocks</h3>
+            <form id="create-stock-form" class="space-y-4 bg-white p-6 rounded shadow-lg">
+                <div>
+                    <label for="stock-product-category" class="block text-gray-700">Product Category</label>
+                    <select id="stock-product-category" class="w-full px-4 py-2 border rounded-lg">
+                        <option value="Router">Router</option>
+                        <option value="Card">Card</option>
+                        <option value="Modem">Modem</option>
+                        <option value="Combiner">Combiner</option>
+                        <option value="Switch">Switch</option>
+                        <option value="Splitter">Splitter</option>
+                        <option value="Multiplexer">Multiplexer</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="stock-product-name" class="block text-gray-700">Product Name</label>
+                    <input type="text" id="stock-product-name" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter product name" required>
+                </div>
+                <div>
+                    <label for="stock-model-number" class="block text-gray-700">Model Number</label>
+                    <input type="text" id="stock-model-number" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter model number" required>
+                </div>
+                <div>
+                    <label for="stocks-required" class="block text-gray-700">Stocks Required</label>
+                    <input type="number" id="stocks-required" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter quantity" required>
+                </div>
+                <button type="button" onclick="createStock()" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+            <div class="mt-6">
+                <h4 class="text-lg font-bold mb-2">Stock Transactions</h4>
+                <table class="w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">Category</th>
+                            <th class="border px-4 py-2">Product Name</th>
+                            <th class="border px-4 py-2">Model Number</th>
+                            <th class="border px-4 py-2">Stocks Required</th>
+                            <th class="border px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stocks-table"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const manageUsersSection = document.getElementById('manage-users-section');
+        const manageProductsSection = document.getElementById('manage-products-section');
+        const manageSuppliersSection = document.getElementById('manage-suppliers-section');
+
+        const usersTable = document.getElementById('users-table');
+        const productsTable = document.getElementById('products-table');
+        const suppliersTable = document.getElementById('suppliers-table');
+
+        const manageStocksSection = document.getElementById('manage-stocks-section');
+        const stocksTable = document.getElementById('stocks-table');
+
+
+        let users = [];
+        let products = [];
+        let suppliers = [];
+        let stocks = [];
+
+        function showManageUsers() {
+            manageProductsSection.classList.add('hidden');
+            manageSuppliersSection.classList.add('hidden');
+            manageUsersSection.classList.remove('hidden');
+        }
+
+        function showManageProducts() {
+            manageUsersSection.classList.add('hidden');
+            manageSuppliersSection.classList.add('hidden');
+            manageProductsSection.classList.remove('hidden');
+        }
+
+        function showManageSuppliers() {
+            manageUsersSection.classList.add('hidden');
+            manageProductsSection.classList.add('hidden');
+            manageSuppliersSection.classList.remove('hidden');
+        }
+
+        function createUser() {
+            const username = document.getElementById('username').value;
+            const userid = document.getElementById('userid').value;
+            const role = document.getElementById('role').value;
+
+            if (username && userid && role) {
+                const newUser = { username, userid, role };
+                users.push(newUser);
+                displayUsers();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function displayUsers() {
+            usersTable.innerHTML = '';
+            users.forEach((user, index) => {
+                usersTable.innerHTML += `
+                    <tr>
+                        <td class="border px-4 py-2">${user.username}</td>
+                        <td class="border px-4 py-2">${user.userid}</td>
+                        <td class="border px-4 py-2">${user.role}</td>
+                        <td class="border px-4 py-2">
+                            <button onclick="editUser(${index})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                            <button onclick="deleteUser(${index})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function createProduct() {
+            const productName = document.getElementById('product-name').value;
+            const productId = document.getElementById('product-id').value;
+            const productCategory = document.getElementById('product-category').value;
+
+            if (productName && productId && productCategory) {
+                const newProduct = { productName, productId, productCategory };
+                products.push(newProduct);
+                displayProducts();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function displayProducts() {
+            productsTable.innerHTML = '';
+            products.forEach((product, index) => {
+                productsTable.innerHTML += `
+                    <tr>
+                        <td class="border px-4 py-2">${product.productName}</td>
+                        <td class="border px-4 py-2">${product.productId}</td>
+                        <td class="border px-4 py-2">${product.productCategory}</td>
+                        <td class="border px-4 py-2">
+                            <button onclick="editProduct(${index})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                            <button onclick="deleteProduct(${index})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function createSupplier() {
+            const supplierName = document.getElementById('supplier-name').value;
+            const supplierMail = document.getElementById('supplier-mail').value;
+            const supplierContact = document.getElementById('supplier-contact').value;
+
+            if (supplierName && supplierMail && supplierContact) {
+                const newSupplier = { supplierName, supplierMail, supplierContact };
+                suppliers.push(newSupplier);
+                displaySuppliers();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function displaySuppliers() {
+            suppliersTable.innerHTML = '';
+            suppliers.forEach((supplier, index) => {
+                suppliersTable.innerHTML += `
+                    <tr>
+                        <td class="border px-4 py-2">${supplier.supplierName}</td>
+                        <td class="border px-4 py-2">${supplier.supplierMail}</td>
+                        <td class="border px-4 py-2">${supplier.supplierContact}</td>
+                        <td class="border px-4 py-2">
+                            <button onclick="editSupplier(${index})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                            <button onclick="deleteSupplier(${index})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function deleteUser(index) {
+            users.splice(index, 1);
+            displayUsers();
+        }
+
+        function editUser(index) {
+            const user = users[index];
+            document.getElementById('username').value = user.username;
+            document.getElementById('userid').value = user.userid;
+            document.getElementById('role').value = user.role;
+            deleteUser(index);
+        }
+
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            displayProducts();
+        }
+
+        function editProduct(index) {
+            const product = products[index];
+            document.getElementById('product-name').value = product.productName;
+            document.getElementById('product-id').value = product.productId;
+            document.getElementById('product-category').value = product.productCategory;
+            deleteProduct(index);
+        }
+
+        function deleteSupplier(index) {
+            suppliers.splice(index, 1);
+            displaySuppliers();
+        }
+
+        function editSupplier(index) {
+            const supplier = suppliers[index];
+            document.getElementById('supplier-name').value = supplier.supplierName;
+            document.getElementById('supplier-mail').value = supplier.supplierMail;
+            document.getElementById('supplier-contact').value = supplier.supplierContact;
+            deleteSupplier(index);
+        }
+        function showManageStocks() {
+            hideAllSections();
+            manageStocksSection.classList.remove('hidden');
+        }
+
+        function hideAllSections() {
+            document.getElementById('manage-users-section').classList.add('hidden');
+            document.getElementById('manage-products-section').classList.add('hidden');
+            document.getElementById('manage-suppliers-section').classList.add('hidden');
+            manageStocksSection.classList.add('hidden');
+        }
+
+        function createStock() {
+            const category = document.getElementById('stock-product-category').value;
+            const productName = document.getElementById('stock-product-name').value;
+            const modelNumber = document.getElementById('stock-model-number').value;
+            const stocksRequired = document.getElementById('stocks-required').value;
+
+            if (category && productName && modelNumber && stocksRequired) {
+                const newStock = { category, productName, modelNumber, stocksRequired };
+                stocks.push(newStock);
+                displayStocks();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function displayStocks() {
+            stocksTable.innerHTML = '';
+            stocks.forEach((stock, index) => {
+                stocksTable.innerHTML += `
+                    <tr>
+                        <td class="border px-4 py-2">${stock.category}</td>
+                        <td class="border px-4 py-2">${stock.productName}</td>
+                        <td class="border px-4 py-2">${stock.modelNumber}</td>
+                        <td class="border px-4 py-2">${stock.stocksRequired}</td>
+                        <td class="border px-4 py-2">
+                            <button onclick="editStock(${index})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                            <button onclick="deleteStock(${index})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function deleteStock(index) {
+            stocks.splice(index, 1);
+            displayStocks();
+        }
+
+        function editStock(index) {
+            const stock = stocks[index];
+            document.getElementById('stock-product-category').value = stock.category;
+            document.getElementById('stock-product-name').value = stock.productName;
+            document.getElementById('stock-model-number').value = stock.modelNumber;
+            document.getElementById('stocks-required').value = stock.stocksRequired;
+            deleteStock(index);
+        }
+    </script>
+</body>
+</html>
